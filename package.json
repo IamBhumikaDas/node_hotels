@@ -1,0 +1,25 @@
+{
+  "name": "node-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.8",
+    "mongoose": "^8.4.5",
+    "progress": "^2.0.3",
+    "prompt-sync": "^4.2.0"
+  }
+}
