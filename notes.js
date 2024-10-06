@@ -4,7 +4,5 @@ age = 20
     return a+b
 
 }
-module.exports ={
-    age,
-    addNumber
-}
+module.exports =
+{addNumber, age}
