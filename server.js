@@ -49,7 +49,8 @@ const app = express()
  app.use(bodyParser.json());//req.body
  const personRoutes = require('./routes/personRoutes')
  const menuItemRoutes =require('./routes/menuRoutes')
-//  require('dotenv').config();
+ require('dotenv').config();
+ const PORT = process.env.PORT || 3000;
 //  const passport =require('./auth')
 app.get('/',function(req,res){
     res.send("hello welcome to my hotel..we have some menu")
@@ -61,7 +62,7 @@ app.get('/',function(req,res){
 app.use('/menuItem',menuItemRoutes);
 app.use('/person',personRoutes);
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
     console.log("listening on port 3000")
 })
  
