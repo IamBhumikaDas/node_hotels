@@ -19,8 +19,10 @@ router.post('/signup',async(req,res)=>{
 
 }
 catch(err){
+    console.log(err);
+    
    res.status(500).json({error : 'internal server error'})
-   console.log(err)
+   
 }
 })
 
@@ -112,8 +114,9 @@ router.get("/:workType",async(req,res)=>{
       
 
     }catch(err){
-        res.status(500).json({error : 'internal server error'})
         console.log(err)
+        res.status(500).json({error : 'internal server error'})
+        
     }
     })
     router.delete('/:id',async(req,res)=>{
@@ -129,8 +132,9 @@ router.get("/:workType",async(req,res)=>{
 
        console.log("data deleted")}
     }catch(err){
-        res.status(500).json({error:"internal server error"})
         console.log(err)
+        res.status(500).json({error:"internal server error"})
+       
     }
     })
 module.exports = router;
