@@ -1,6 +1,5 @@
 const mongoose=require("mongoose")
-
-//const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')
 //define the persoms schema
 const personSchema=new mongoose.Schema({
     name:{
@@ -32,16 +31,18 @@ required:true
     salary:{
         type:Number,
         required:true
-    }
-   /* username:{
+    },
+    username:{
         type:String,
         required: true
     },
     password:{
         required:true,
         type:String
-    }*/
-})/*
+    }
+})
+
+
 //create Person model
 personSchema.pre('save',async function(next){
     const person = this
@@ -68,6 +69,6 @@ personSchema.methods.comparePassword = async function(candidatePassword){
     }catch(err){
         throw err;
     }
-}*/
+}
 const Person= mongoose.model('Person',personSchema);
-module.exports = Person;
+module.exports =  Person 

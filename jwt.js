@@ -1,29 +1,33 @@
-/*const jwt = require('jsonwebtoken')
-
-const jwtAuthMiddleware = (req,res,next)=>{
-   //first check request headers has authorized or not 
-   const authorization = req.headers.authorization
-   if (!authorization) return res.status(401).json({error: 'token not found'})
 
 
-    //extract the jwt token from the request headers
-    const token = req.headers.authorization.split('')[1];
-    if(!token) return res.status(401).json({error :'unauthorized'});
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
+
+const jwtMiddleware =(req,res,next)=>{
+
+ const auth= req.headers.authorization
+
+ if(!auth){
+    return res.status(404).json({error:'token not found'})
+ }
+
+ const token =req.headers.authorization.split(' ')[1];
+ if(!token) return res.status(401).json({error :"unauthorized"})
 
     try{
-        // verify the jwt token 
-        const decoded =jwt.verify(token,process.env.JWT_SECRET)
+      const decode =  jwt.verify(token,process.env.JWT_SECRET_KEY);
 
-        req.user = decoded
-        next()
+      req.user = decode;
+      next();
+
     }catch(err){
         console.log(err)
-        res.status(401).json({error:'invalid token'})}
+        return res.status(401).json({error :"internal server error"})
     }
-
-
-const generateToken = (userData)=>{
-    return jwt.sign(userData,process.env.JWT_SECRET);
 }
 
-module.exports = {jwtAuthMiddleware, generateToken}*/
+const jwt_token_generate =(userdata)=>{
+ return jwt.sign(userdata,process.env.JWT_SECRET_KEY,{expiresIn:3000})
+}
+
+module.exports ={ jwtMiddleware ,jwt_token_generate };

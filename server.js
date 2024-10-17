@@ -1,17 +1,3 @@
- //
-// (function(a,b){
-//     console.log("bhumika is added")
-// })();
-//  function callBack(){
-//      console.log("bhumika is calling a call back function")
-//  }
-
-//const { add } = require("lodash")
-
- 
-// add(3,88888,function(){
-//     console.log("hello")
-// })
 
 /*var notes = require('./notes.js')
 console.log("server file is available")
@@ -51,15 +37,31 @@ const app = express()
  const menuItemRoutes =require('./routes/menuRoutes')
  require('dotenv').config();
  const PORT = process.env.PORT || 3000;
-//  const passport =require('./auth')
-app.get('/',function(req,res){
+ const passport = require('./auth')
+
+
+//Middleware function
+const logMiddleware = ((req,res,next)=>{
+    const date1 = new Date().toLocaleString();
+    const url = req.originalUrl;
+   // console.log(`[${new Date().toLocaleString()}] request made to this url: ${req.originalUrl}`)
+    console.log("date :",date1 ,"request made to :",url);
+    next();
+})
+
+app.use(passport.initialize());
+const localAuthMiddleware = passport.authenticate('local',{session:false})
+app.use(logMiddleware);
+
+
+app.get('/', localAuthMiddleware,function(req,res){
     res.send("hello welcome to my hotel..we have some menu")
 }) 
 
 
 
 
-app.use('/menuItem',menuItemRoutes);
+app.use('/menuItem',localAuthMiddleware ,menuItemRoutes);
 app.use('/person',personRoutes);
 
 app.listen(PORT,()=>{
@@ -67,60 +69,3 @@ app.listen(PORT,()=>{
 })
  
  
-/*
- const PORT = process.env.PORT || 3000;
- //const person = require('./models/person')
- 
-
-app.use(passport.initialize())
- const MenuItem=require('./models/MenuItem')
- const personRoutes = require('./routes/personRoutes')
- localAuthMiddleware = passport.authenticate('local',{session:false})
- app.use('/person',personRoutes)
-//middleware function
-const logRequest = (req,res,next) => {
-    console.log(`[${new Date().toLocaleString()}] Request Made to : ${req.originalUrl}`);
-    next();//move on to the next phase 
-     }
-     
-     app.use(logRequest)
-app.get('/', function(req,res){
-   res.send('hellow welcome....')
- })
-// app.get('/chicken',(req,res)=>{
-//     res.send("sure sir")
-// })
-// app.get('/idli',(req,res)=>{
-//     var customized_idli={
-//         name: "rava idli",
-//         size:"10 cm",
-//         is_sumber:"true",
-//         is_chatni:'false'
-//     }
-   
-//     res.send(customized_idli)
-// })
- //app.post('/person',(req,res)=>{
- //    res.send("here is your data")
- //})
- 
-
- app.post('./menu',async(req,res)=>{
-    try{
-const data=req.body
-const newMenu=new MenuItem(data)
-const response = await newMenu.save()
-console.log("data saved")
-res.status(200).json(response)
-    }
-    catch(err){
-        console.log(err)
-        res.status(500).json({error: 'internal server error'})
-
-    }
- })
- 
-app.listen(PORT,()=>{
-     console.log("server started")
- })
-*/

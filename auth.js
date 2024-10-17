@@ -24,3 +24,27 @@ return done (err)
 }))
 
 module.exports = passport; */
+const passport = require('passport');
+ const localStrategy = require('passport-local');
+const Person = require('./models/Person');
+
+//authentication function
+passport.use(new localStrategy( async (username,password,done)=>{
+    try{
+   // console.log("username :", username, "password :", password)
+  const response = await  Person.findOne({username:username});
+  if(!response){
+    return done(null, false , {messege : "user not found"});
+  }else{
+ const passwordCheck = await response.comparePassword(password);
+  if(passwordCheck){
+    return done(null,response)
+  }else{
+    return done (null ,false, {messege : "password not matched"})
+  }
+  }}
+    catch(err){
+     return done(err)
+    }
+}))
+module.exports = passport;
